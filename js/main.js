@@ -1,9 +1,11 @@
 let postsRow = document.querySelector('.product');
 let postSearchInput = document.querySelector('.nav__input');
 let pagination = document.querySelector('.pagination');
+let formSelect = document.querySelector('.form-select');
 
 let postSearch = '';
 let activePage = 1;
+let globalValue = formSelect.value;
 
 function getPostCard({ name, flags, area }) {
   return `
@@ -14,32 +16,27 @@ function getPostCard({ name, flags, area }) {
   `;
 }
 
-async function getData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-
 async function getPosts() {
   postsRow.innerHTML = '...Loading';
   try {
-    let url = 'https://restcountries.com/v3.1/all';
+    let url;
+
+    if (globalValue === '/all') {
+      url = 'https://restcountries.com/v3.1/all';
+    } else {
+      url = `https://restcountries.com/v3.1${globalValue}`;
+    } if (globalValue === '/region/africa') {
+      postsRow.innerHTML = '<div>АФРИКА ВРЕМЕННО НЕДОСТУПЕН</div>'
+      pagination.innerHTML = ''
+    }
 
     if (postSearch) {
       url = `https://restcountries.com/v3.1/name/${postSearch}`;
     }
 
     let postsWithPagination = await getData(url);
-    console.log(postsWithPagination);
 
-    let pages = Math.ceil(postsWithPagination.length / 10);
+    let pages = Math.ceil(postsWithPagination.length / 20);
 
     pagination.innerHTML = '';
 
@@ -67,8 +64,8 @@ async function getPosts() {
 
     postsRow.innerHTML = '';
 
-    let startIndex = (activePage - 1) * 10;
-    let endIndex = activePage * 10;
+    let startIndex = (activePage - 1) * 20;
+    let endIndex = activePage * 20;
     let posts = postsWithPagination.slice(startIndex, endIndex);
 
     posts.forEach((post) => {
@@ -85,6 +82,13 @@ postSearchInput.addEventListener('keyup', function (e) {
   e.preventDefault();
   activePage = 1;
   postSearch = this.value.trim();
+  getPosts();
+});
+
+formSelect.addEventListener('change', function (e) {
+  e.preventDefault();
+  activePage = 1;
+  globalValue = this.value;
   getPosts();
 });
 

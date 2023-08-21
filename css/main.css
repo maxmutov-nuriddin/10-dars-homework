@@ -121,6 +121,17 @@ header {
     margin: 5px;
   }
 }
+
 .card {
   background-color: #cfcece !important;
+}
+
+.form-select {
+  color: #949493;
+  padding: 5px 10px;
+  background-color: transparent;
+}
+
+.afric{
+  color: red !important;
 }

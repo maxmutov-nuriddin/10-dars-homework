@@ -14,11 +14,21 @@
   <header>
     <nav class="header__nav">
       <ul class="nav">
-        <li class="nav__item name-country" >
+        <li class="nav__item name-country">
           Country
         </li>
         <li class="nav__item">
           <input class="nav__input" placeholder="search" type="text">
+        </li>
+        <li>
+          <select class="form-select">
+            <option value="/all" selected>All</option>
+            <option value="/region/america">America</option>
+            <option value="/region/asia">Asia</option>
+            <option value="/region/europe">Europe</option>
+            <option value="/region/oceania">Oceania</option>
+            <option value="/region/africa">Africa <span class="afric">Временно недоступен</span></option>
+          </select>
         </li>
         <li>
           <div class="tumbler-wrapper">
@@ -99,7 +109,7 @@
     <section class="cards">
       <div class="container">
         <div class="product">
-          
+
         </div>
         <ul class="pagination"></ul>
     </section>
@@ -128,7 +138,6 @@
     </div>
   </div> -->
 
-  <script src="./js/card.js"></script>
   <script src="./js/day-night.js"></script>
   <script src="./js/data.js"></script>
   <script src="./js/main.js"></script>
